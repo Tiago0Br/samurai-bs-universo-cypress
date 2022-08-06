@@ -1,0 +1,15 @@
+{
+  "name": "samuraibs-tests",
+  "version": "1.0.0",
+  "description": "Projetos de testes de aceitação e2e em Cypress",
+  "main": "index.js",
+  "author": "Tiago Lopes",
+  "license": "MIT",
+  "scripts": {
+    "test": "cypress run",
+    "cy:open": "cypress open"
+  },
+  "devDependencies": {
+    "cypress": "10.4.0"
+  }
+}
