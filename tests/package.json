@@ -10,6 +10,7 @@
     "cy:open": "cypress open"
   },
   "devDependencies": {
+    "@faker-js/faker": "7.4.0",
     "cypress": "10.4.0"
   }
 }
