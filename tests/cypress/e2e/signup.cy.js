@@ -1,7 +1,5 @@
 /// <reference types="cypress"/>
 
-import { faker } from '@faker-js/faker';
-
 describe('Cadastro de usuários', () => {
     beforeEach(() => {
         cy.visit('/signup')
@@ -10,13 +8,16 @@ describe('Cadastro de usuários', () => {
     it('Deve cadastrar um usuário com sucesso', () => {
         const user = {
             name: 'Tiago Lopes',
-            email: faker.internet.email(),
+            email: 'tiagoltavares2002@gmail.com',
             password: 'pwd123'
         }
+
+        cy.task('removeUser', user.email)
 
         cy.get('input[placeholder=Nome]').type(user.name)
         cy.get('input[placeholder="E-mail"]').type(user.email)
         cy.get('input[type=password]').type(user.password)
+
         cy.contains('button', 'Cadastrar').click()
 
         cy.get('.toast', { timeout: 8000 })
