@@ -15,8 +15,8 @@ describe('Cadastro de usuários', () => {
     
             cy.task('removeUser', user.email)
     
-            cy.get('input[placeholder=Nome]').type(user.name)
-            cy.get('input[placeholder="E-mail"]').type(user.email)
+            cy.get('input[placeholder*=Nome]').type(user.name)
+            cy.get('input[placeholder*="email"]').type(user.email)
             cy.get('input[type=password]').type(user.password)
     
             cy.contains('button', 'Cadastrar').click()
@@ -44,8 +44,8 @@ describe('Cadastro de usuários', () => {
                 body: user
             }).its('status').should('be.equal', 200)
     
-            cy.get('input[placeholder=Nome]').type(user.name)
-            cy.get('input[placeholder="E-mail"]').type(user.email)
+            cy.get('input[placeholder*=Nome]').type(user.name)
+            cy.get('input[placeholder*="email"]').type(user.email)
             cy.get('input[type=password]').type(user.password)
     
             cy.contains('button', 'Cadastrar').click()
