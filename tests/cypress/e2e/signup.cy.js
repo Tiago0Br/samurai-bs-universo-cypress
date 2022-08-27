@@ -1,8 +1,9 @@
 /// <reference types="cypress"/>
+import signupPage from '../support/pages/signup'
 
 describe('Cadastro de usuários', () => {
     beforeEach(() => {
-        cy.visit('/signup')
+        signupPage.go()
     })
 
     context('Cadastro válido', () => {
@@ -15,16 +16,11 @@ describe('Cadastro de usuários', () => {
     
             cy.task('removeUser', user.email)
     
-            cy.get('input[placeholder*=Nome]').type(user.name)
-            cy.get('input[placeholder*="email"]').type(user.email)
-            cy.get('input[type=password]').type(user.password)
+            signupPage.form(user)
+            signupPage.submit()
     
-            cy.contains('button', 'Cadastrar').click()
-    
-            cy.get('.toast', { timeout: 8000 })
-                .find('p')
-                .should('be.visible')
-                .and('have.text', 'Agora você se tornou um(a) Samurai, faça seu login para ver seus agendamentos!')
+            signupPage
+                .toasterHaveText('Agora você se tornou um(a) Samurai, faça seu login para ver seus agendamentos!')
         })
     })
 
@@ -44,16 +40,10 @@ describe('Cadastro de usuários', () => {
                 body: user
             }).its('status').should('be.equal', 200)
     
-            cy.get('input[placeholder*=Nome]').type(user.name)
-            cy.get('input[placeholder*="email"]').type(user.email)
-            cy.get('input[type=password]').type(user.password)
+            signupPage.form(user)
+            signupPage.submit()
     
-            cy.contains('button', 'Cadastrar').click()
-    
-            cy.get('.toast', { timeout: 8000 })
-                .find('p')
-                .should('be.visible')
-                .and('have.text', 'Email já cadastrado para outro usuário.')
+            signupPage.toasterHaveText('Email já cadastrado para outro usuário.')
         })
     })
 })
