@@ -20,7 +20,8 @@ describe('Cadastro de usuários', () => {
             signupPage.submit()
     
             signupPage
-                .toasterHaveText('Agora você se tornou um(a) Samurai, faça seu login para ver seus agendamentos!')
+                .toast
+                .shouldHaveText('Agora você se tornou um(a) Samurai, faça seu login para ver seus agendamentos!')
         })
     })
 
@@ -43,7 +44,7 @@ describe('Cadastro de usuários', () => {
             signupPage.form(user)
             signupPage.submit()
     
-            signupPage.toasterHaveText('Email já cadastrado para outro usuário.')
+            signupPage.toast.shouldHaveText('Email já cadastrado para outro usuário.')
         })
     })
 })
