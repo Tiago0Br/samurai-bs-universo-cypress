@@ -19,6 +19,11 @@ class SignupPage {
     submit() {
         cy.contains(el.signupButton).click()
     }
+
+    alertHaveText(expectedText) {
+        cy.contains(el.alertError, expectedText)
+            .should('be.visible')
+    }
 }
 
 export default new SignupPage()
