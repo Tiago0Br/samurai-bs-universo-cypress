@@ -52,6 +52,7 @@ describe('Cadastro de usuários', () => {
                 password: 'pwd123'
             }
 
+            signupPage.go()
             signupPage.form(user)
             signupPage.submit()
             signupPage.alertHaveText('Informe um email válido')

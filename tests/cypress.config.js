@@ -1,14 +1,13 @@
 const { defineConfig } = require("cypress")
 const { Pool } = require('pg')
-const { db_config } = require('./cypress.env.json')
 
 module.exports = defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
     viewportWidth: 1440,
     viewportHeight: 900,
-    setupNodeEvents(on, _) {
-      const pool = new Pool(db_config)
+    setupNodeEvents(on, config) {
+      const pool = new Pool(config.env.db_config)
   
       on('task', {
         removeUser(email) {
