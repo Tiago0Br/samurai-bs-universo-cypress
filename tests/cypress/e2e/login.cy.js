@@ -4,16 +4,23 @@ import loginPage from '../support/pages/login'
 import dashPage from '../support/pages/dash'
 
 describe('Login', () => {
-    it('Login com sucesso', () => {
+    context('Usuário válido', () => {
         const user = {
             name: 'Teste de Login',
             email: 'teste@samuraibs.com',
-            password: 'pwd123'
+            password: 'pwd123',
+            is_provider: true
         }
 
-        loginPage.go()
-        loginPage.form(user)
-        loginPage.submit()
-        dashPage.header.userLoggedIn(user.name)
+        before(() => {
+            cy.postUser(user)
+        })
+
+        it('Login com sucesso', () => {
+            loginPage.go()
+            loginPage.form(user)
+            loginPage.submit()
+            dashPage.header.userLoggedIn(user.name)
+        })
     })
 })
