@@ -1,8 +1,8 @@
+import header from '../../components/header'
+
 class DashPage {
-    userLoggedIn(username) {
-        cy.get('a[href="/profile"]')
-            .should('be.visible')
-            .and('have.text', username)
+    constructor() {
+        this.header = header
     }
 }
 
