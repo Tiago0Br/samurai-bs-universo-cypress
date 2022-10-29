@@ -5,7 +5,7 @@ class Toast {
         cy.get(el.toast, { timeout: 8000 })
             .find('p')
             .should('be.visible')
-            .and('have.text', expectText)
+            .and('include.text', expectText)
     }
 }
 
