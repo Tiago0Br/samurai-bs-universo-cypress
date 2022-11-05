@@ -62,7 +62,25 @@ describe('Login', () => {
 
                     loginPage.form(user)
                     loginPage.submit()
-                    loginPage.alertHaveText('Informe um email válido')
+                    loginPage.alert.haveText('Informe um email válido')
+                })
+            })
+        })
+
+        context('Campos em branco', () => {
+            const alertMessages = [ 
+                {field: 'e-mail', message: 'E-mail é obrigatório'}, 
+                {field: 'senha', message: 'Senha é obrigatória'}
+            ]
+
+            before(() => {
+                loginPage.go()
+                loginPage.submit()
+            })
+
+            alertMessages.forEach(({ field, message }) => {
+                it(field, () => {
+                    loginPage.alert.haveText(message)
                 })
             })
         })

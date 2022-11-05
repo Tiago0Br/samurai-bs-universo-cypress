@@ -55,7 +55,7 @@ describe('Cadastro de usuários', () => {
             signupPage.go()
             signupPage.form(user)
             signupPage.submit()
-            signupPage.alertHaveText('Informe um email válido')
+            signupPage.alert.haveText('Informe um email válido')
         })
 
         context('Senha com menos de 6 caracteres', () => {
@@ -67,7 +67,7 @@ describe('Cadastro de usuários', () => {
                     signupPage.go()
                     signupPage.form(user)
                     signupPage.submit()
-                    signupPage.alertHaveText('Pelo menos 6 caracteres')
+                    signupPage.alert.haveText('Pelo menos 6 caracteres')
                 })
             })
         })
@@ -86,7 +86,7 @@ describe('Cadastro de usuários', () => {
 
             alertMessages.forEach(({ field, message }) => {
                 it(field, () => {
-                    signupPage.alertHaveText(message)
+                    signupPage.alert.haveText(message)
                 })
             })
         })
