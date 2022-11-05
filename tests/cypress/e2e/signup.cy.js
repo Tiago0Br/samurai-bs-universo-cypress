@@ -1,15 +1,11 @@
 /// <reference types="cypress"/>
 import signupPage from '../support/pages/signup'
+import signup from '../fixtures/signup.json'
 
 describe('Cadastro de usuários', () => {
     context('Cadastro válido', () => {
         it('Deve cadastrar um usuário com sucesso', () => {
-            const user = {
-                name: 'Tiago Lopes',
-                email: 'tiagoltavares2002@gmail.com',
-                password: 'pwd123'
-            }
-    
+            const user = signup.success
             cy.task('removeUser', user.email)
     
             signupPage.go()
@@ -24,12 +20,7 @@ describe('Cadastro de usuários', () => {
 
     context('Tentativa de cadastro com dados inválidos', () => {
         it('E-mail repetido', () => {
-            const user = {
-                name: 'João Lucas',
-                email: 'joaolucas@samuraibs.com',
-                password: 'pwd123',
-                is_provider: true
-            }
+            const user = signup.email_duplicado
     
             cy.task('removeUser', user.email)
             cy.request({
@@ -46,11 +37,7 @@ describe('Cadastro de usuários', () => {
         })
 
         it('E-mail inválido', () => {
-            const user = {
-                name: 'Elizabeth Olsen',
-                email: 'liza.yahoo.com',
-                password: 'pwd123'
-            }
+            const user = signup.email_inv
 
             signupPage.go()
             signupPage.form(user)
@@ -59,7 +46,7 @@ describe('Cadastro de usuários', () => {
         })
 
         context('Senha com menos de 6 caracteres', () => {
-            const user = { name: 'Jason Friday', email: 'jason@gmail.com' }
+            const user = signup.short_password
             const passwords = ['1', '2a', '3ab', '4abc', '5abcd']
             passwords.forEach(p => {
                 it(`${p.length} ${p.length === 1 ? 'caracter' : 'caracteres'}`, () => {
