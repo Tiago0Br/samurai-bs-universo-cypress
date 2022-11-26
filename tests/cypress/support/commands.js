@@ -1,5 +1,7 @@
 /// <reference types="cypress"/>
 
+import moment from 'moment'
+
 Cypress.Commands.add('postUser', user => {
     cy.task('removeUser', user.email)
     cy.request({
@@ -21,4 +23,58 @@ Cypress.Commands.add('recoveryPass', email => {
     cy.task('findToken', email).then(result => {
         Cypress.env('recoveryToken', result.token)
     })
+})
+
+Cypress.Commands.add('apiLogin', ({ email, password }) => {
+    const payload = {
+        email,
+        password
+    }
+
+    cy.request({
+        method: 'POST',
+        url: 'http://localhost:3333/sessions',
+        body: payload
+    }).then(res => {
+        expect(res.status).to.be.equal(200)
+        Cypress.env('apiToken', res.body.token)
+    })
+})
+
+Cypress.Commands.add('setProviderId', providerEmail => {
+    cy.request({
+        method: 'GET',
+        url: 'http://localhost:3333/providers',
+        headers: {
+            authorization: `Bearer ${Cypress.env('apiToken')}`
+        }
+    }).then(({ status, body }) => {
+        expect(status).to.be.equal(200)
+        body.forEach(provider => {
+            if (provider.email === providerEmail) {
+                Cypress.env('providerId', provider.id)
+            }
+        })
+    })
+})
+
+Cypress.Commands.add('createAppointment', hour => {
+    let now = new Date()
+    now.setDate(now.getDate() + 2)
+    const date = moment(now).format(`YYYY-MM-DD ${hour}:00`)
+    Cypress.env('appointmentDay', now.getDate())
+
+    const payload = {
+        provider_id: Cypress.env('providerId'),
+        date
+    }
+
+    cy.request({
+        method: 'POST',
+        url: 'http://localhost:3333/appointments',
+        headers: {
+            authorization: `Bearer ${Cypress.env('apiToken')}`
+        },
+        body: payload
+    }).its('status').should('be.equal', 200)
 })
