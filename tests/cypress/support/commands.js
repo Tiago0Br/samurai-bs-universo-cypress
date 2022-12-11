@@ -1,12 +1,13 @@
 /// <reference types="cypress"/>
 
 import moment from 'moment'
+const apiUrl = Cypress.env('api')
 
 Cypress.Commands.add('postUser', user => {
     cy.task('removeUser', user.email)
     cy.request({
         method: 'POST',
-        url: 'http://localhost:3333/users',
+        url: `${apiUrl}/users`,
         body: user
     }).its('status').should('be.equal', 200)
 })
@@ -14,7 +15,7 @@ Cypress.Commands.add('postUser', user => {
 Cypress.Commands.add('recoveryPass', email => {
     cy.request({
         method: 'POST',
-        url: 'http://localhost:3333/password/forgot',
+        url: `${apiUrl}/password/forgot`,
         body: {
             email
         }
@@ -33,7 +34,7 @@ Cypress.Commands.add('apiLogin', ({ email, password }) => {
 
     cy.request({
         method: 'POST',
-        url: 'http://localhost:3333/sessions',
+        url: `${apiUrl}/sessions`,
         body: payload
     }).then(res => {
         expect(res.status).to.be.equal(200)
@@ -44,7 +45,7 @@ Cypress.Commands.add('apiLogin', ({ email, password }) => {
 Cypress.Commands.add('setProviderId', providerEmail => {
     cy.request({
         method: 'GET',
-        url: 'http://localhost:3333/providers',
+        url: `${apiUrl}/providers`,
         headers: {
             authorization: `Bearer ${Cypress.env('apiToken')}`
         }
@@ -71,7 +72,7 @@ Cypress.Commands.add('createAppointment', hour => {
 
     cy.request({
         method: 'POST',
-        url: 'http://localhost:3333/appointments',
+        url: `${apiUrl}/appointments`,
         headers: {
             authorization: `Bearer ${Cypress.env('apiToken')}`
         },
