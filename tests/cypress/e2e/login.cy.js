@@ -17,10 +17,7 @@ describe('Login', () => {
         })
 
         it('Login com sucesso', () => {
-            loginPage.go()
-            loginPage.form(user)
-            loginPage.submit()
-            dashPage.header.userLoggedIn(user.name)
+            cy.apiLogin(user, true)
         })
     })
 

@@ -11,9 +11,7 @@ describe('Dashboard', () => {
         cy.apiLogin(customer)
         cy.setProviderId(provider.email)
         cy.createAppointment(appointment.hour).then(() => {
-            loginPage.go()
-            loginPage.form(provider)
-            loginPage.submit()
+            cy.apiLogin(provider, true)
     
             dashPage.calendarShouldBeVisible()
             dashPage.selectDay(Cypress.env('appointmentDay'))

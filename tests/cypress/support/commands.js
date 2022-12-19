@@ -1,7 +1,7 @@
 /// <reference types="cypress"/>
 
 import moment from 'moment'
-const apiUrl = Cypress.env('api')
+const apiUrl = Cypress.env('apiUrl')
 
 Cypress.Commands.add('postUser', user => {
     cy.task('removeUser', user.email)
@@ -26,7 +26,7 @@ Cypress.Commands.add('recoveryPass', email => {
     })
 })
 
-Cypress.Commands.add('apiLogin', ({ email, password }) => {
+Cypress.Commands.add('apiLogin', ({ email, password }, setLocalStorage=false) => {
     const payload = {
         email,
         password
@@ -39,6 +39,15 @@ Cypress.Commands.add('apiLogin', ({ email, password }) => {
     }).then(res => {
         expect(res.status).to.be.equal(200)
         Cypress.env('apiToken', res.body.token)
+
+        if (setLocalStorage) {
+            const { token, user } = res.body
+    
+            window.localStorage.setItem('@Samurai:token', token)
+            window.localStorage.setItem('@Samurai:user', JSON.stringify(user))
+
+            cy.visit('/dashboard')
+        }
     })
 })
 
