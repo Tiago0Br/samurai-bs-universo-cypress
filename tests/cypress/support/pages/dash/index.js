@@ -11,6 +11,10 @@ class DashPage {
     }
 
     selectDay(day) {
+        if (day === 1) {
+            cy.get('span[class*=next]').click()
+        }
+
         const target = new RegExp(`^${day}$`, 'g')
         cy.contains(el.availableDays, target).click()
     }
