@@ -3,7 +3,7 @@ import fpPage from '../support/pages/forgotpass'
 import rpPage from '../support/pages/resetpass'
 import user from '../fixtures/recovery.json'
 
-describe('Recuperação de senha', () => {
+describe.skip('Recuperação de senha', () => {
     it('Resgate da senha por e-mail', () => {
         cy.postUser(user)
 

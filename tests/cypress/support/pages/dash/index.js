@@ -10,9 +10,18 @@ class DashPage {
         cy.get(el.calendar, { timeout: 7000 }).should('be.visible')
     }
 
-    selectDay(day) {
-        if (day === 1) {
+    selectDay(date) {
+        cy.intercept({
+            method: 'GET',
+            url: `${Cypress.env('apiUrl')}/providers/**/month-availability**`
+        }).as('availableDays')
+
+        const day = date.getDate()
+        const month = date.getMonth()
+        const now = new Date()
+        if (month !== now.getMonth()) {
             cy.get('span[class*=next]').click()
+            cy.wait('@availableDays')
         }
 
         const target = new RegExp(`^${day}$`, 'g')

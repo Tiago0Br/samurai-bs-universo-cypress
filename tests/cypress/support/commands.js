@@ -70,15 +70,10 @@ Cypress.Commands.add('setProviderId', providerEmail => {
 
 Cypress.Commands.add('createAppointment', hour => {
     let now = new Date()
-    let dayOfWeek = now.getDay()
 
-    if ([5, 6, 0].includes(dayOfWeek)) {
-        now.setDate(now.getDate() + 3)
-    } else {
-        now.setDate(now.getDate() + 1)
-    }
+    now.setDate(now.getDate() + 1)
     const date = moment(now).format(`YYYY-MM-DD ${hour}:00`)
-    Cypress.env('appointmentDay', now.getDate())
+    Cypress.env('appointmentDate', now)
 
     const payload = {
         provider_id: Cypress.env('providerId'),
