@@ -8,6 +8,9 @@ class ResetPassPage {
 
     go() {
         cy.visit(`/reset-password?token=${Cypress.env('recoveryToken')}`)
+
+        cy.contains(el.title)
+            .should('be.visible')
     }
 
     form(newPass, confirmPass) {
