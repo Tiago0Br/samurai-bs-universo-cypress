@@ -59,22 +59,18 @@ describe('Cadastro de usuários', () => {
             })
         })
 
-        context('Campos em branco', () => {
+        it('Campos em branco', () => {
             const alertMessages = [
-                {field: 'nome', message: 'Nome é obrigatório'}, 
-                {field: 'e-mail', message: 'E-mail é obrigatório'}, 
-                {field: 'senha', message: 'Senha é obrigatória'}
+                {message: 'Nome é obrigatório'}, 
+                {message: 'E-mail é obrigatório'}, 
+                {message: 'Senha é obrigatória'}
             ]
 
-            before(() => {
-                signupPage.go()
-                signupPage.submit()
-            })
+            signupPage.go()
+            signupPage.submit()
 
-            alertMessages.forEach(({ field, message }) => {
-                it(field, () => {
-                    signupPage.alert.haveText(message)
-                })
+            alertMessages.forEach(({ message }) => {
+                signupPage.alert.haveText(message)
             })
         })
     })

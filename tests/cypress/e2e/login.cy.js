@@ -3,6 +3,10 @@
 import loginPage from '../support/pages/login'
 
 describe('Login', () => {
+    beforeEach(() => {
+        loginPage.go()
+    })
+
     context('Usuário válido', () => {
         const user = {
             name: 'Teste de Login',
@@ -31,7 +35,6 @@ describe('Login', () => {
 
             cy.postUser(user).then(() => {
                 user.password = 'abc123'
-                loginPage.go()
                 loginPage.form(user)
                 loginPage.submit()
                 const message = 'verifique suas credenciais'
@@ -39,7 +42,7 @@ describe('Login', () => {
             })
         })
 
-        context('E-mail inválido', () => {
+        it('E-mail inválido', () => {
             const invalidEmails = [
                 'tiago.com.br',
                 'yahoo.com',
@@ -48,18 +51,13 @@ describe('Login', () => {
                 'tiago@'
             ]
 
-            before(() => {
-                loginPage.go()
-            })
-
             invalidEmails.forEach(invalidEmail => {
-                it(`Não deve logar com o e-mail ${invalidEmail}`, () => {
-                    const user = { email: invalidEmail, password: 'pwd123' }
+                const user = { email: invalidEmail, password: 'pwd123' }
 
-                    loginPage.form(user)
-                    loginPage.submit()
-                    loginPage.alert.haveText('Informe um email válido')
-                })
+                cy.log(`Não deve logar com o e-mail ${invalidEmail}`)
+                loginPage.form(user)
+                loginPage.submit()
+                loginPage.alert.haveText('Informe um email válido')
             })
         })
 
@@ -69,8 +67,7 @@ describe('Login', () => {
                 {field: 'senha', message: 'Senha é obrigatória'}
             ]
 
-            before(() => {
-                loginPage.go()
+            beforeEach(() => {
                 loginPage.submit()
             })
 
