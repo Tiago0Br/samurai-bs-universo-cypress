@@ -6,6 +6,7 @@ module.exports = defineConfig({
     baseUrl: 'http://localhost:3000',
     viewportWidth: 1440,
     viewportHeight: 900,
+    projectId: "rsp29p",
     setupNodeEvents(on, config) {
       const pool = new Pool(config.env.db_config)
   
